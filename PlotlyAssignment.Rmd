@@ -1,0 +1,55 @@
+---
+title: "Coursera : Plotly Assignment"
+author: "Jagadeesha"
+date: "September 26, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Plotly
+
+Plotly, also known by its URL, Plot.ly, is a technical computing company headquartered in Montreal, Quebec, that develops online data analytics and visualization tools. Plotly provides online graphing, analytics, and statistics tools for individuals and collaboration, as well as scientific graphing libraries for Python, R, MATLAB, Perl, Julia, Arduino, and REST. (Source: Wikipedia - https://en.wikipedia.org/wiki/Plotly)
+
+## Plotly for R
+
+Plotly is an R package for creating interactive web-based graphs via the open source JavaScript graphing library plotly.js. As of version 2.0 (November 17, 2015), Plotly graphs are rendered locally through the htmlwidgets framework. For more information, please visit https://plot.ly/r/getting-started/
+
+## Basic Chart Types
+
+Following are some of the basic chart types provided by plotly for R.
+
+- Scatter And Line Plots (https://plot.ly/r/line-and-scatter/)
+- Line Charts (https://plot.ly/r/line-charts/)
+- Bar Charts (https://plot.ly/r/bar-charts/)
+- Pie Charts (https://plot.ly/r/pie-charts/)
+- Etc (https://plot.ly/r/basic-charts/)
+
+
+## Example: The plot
+
+```{r, ECHO=FALSE, message=FALSE, include=FALSE}
+suppressMessages(library(plotly))
+suppressMessages(library(quantmod))
+
+m <- list(l = 50, r = 50, b = 50, t = 100, pad = 4)
+
+getSymbols(Symbols = c("AAPL", "GOOG", "MSFT"))
+
+ds <- data.frame(Date = index(AAPL), AAPL[,6], GOOG[,6], MSFT[,6])
+
+p <- plot_ly(ds, x = ~Date) %>%
+  add_lines(y = ~AAPL.Adjusted, name = "Apple") %>%
+  add_lines(y = ~GOOG.Adjusted, name = "Google") %>%
+  add_lines(y = ~MSFT.Adjusted, name = "Microsoft") %>%
+  layout(title = "Stock Prices Comparison", margin = m,
+    xaxis = list(rangeslider = list(type = "date")),
+    yaxis = list(title = "Price"))
+```
+
+```{r, message=FALSE, ECHO=FALSE}
+p
+```
+
